@@ -23,11 +23,11 @@ def extract_text(file: UploadFile) -> str:
     if len(reader.pages) > MAX_PAGES:
         raise HTTPException(status_code=400, detail=f"PDF exceeds {MAX_PAGES} pages")
 
-    pages = [
-        f"[Page {i + 1}]\n{page.extract_text() or ''}"
-        for i, page in enumerate(reader.pages)
-    ]
-    text = "\n".join(pages).strip()
-    if not text:
+    raw_pages = [page.extract_text() or "" for page in reader.pages]
+    raw_text = "\n".join(raw_pages).strip()
+    if not raw_text:
         raise HTTPException(status_code=422, detail="No extractable text — OCR is not supported")
+    text = "\n".join(
+        f"[Page {i + 1}]\n{page}" for i, page in enumerate(raw_pages)
+    )
     return text, len(reader.pages)
