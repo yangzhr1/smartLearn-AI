@@ -1,0 +1,135 @@
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  margin: 0;
+  padding: 4rem 2rem;
+  background: #fafaf9;
+  color: #292524;
+}
+
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+h1 {
+  font-size: 1.25rem;
+  font-weight: 450;
+  letter-spacing: -0.02em;
+  margin: 0 0 2.5rem;
+  color: #1c1917;
+}
+
+.upload-form,
+.chat-form {
+  display: flex;
+  gap: 0.625rem;
+  margin-bottom: 1.25rem;
+}
+
+input[type="file"] {
+  font-size: 0.875rem;
+  color: #78716c;
+}
+
+input[type="file"]::file-selector-button {
+  background: #fff;
+  border: 1px solid #e7e5e4;
+  border-radius: 6px;
+  padding: 0.4em 0.8em;
+  margin-right: 0.75rem;
+  font-size: 0.8rem;
+  color: #44403c;
+  cursor: pointer;
+}
+
+.chat-form input[type="text"] {
+  flex: 1;
+  padding: 0.55rem 0.75rem;
+  font-size: 0.875rem;
+  border: 1px solid #e7e5e4;
+  border-radius: 6px;
+  background: #fff;
+  color: #292524;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.chat-form input[type="text"]:focus {
+  border-color: #a8a29e;
+}
+
+.chat-form input[type="text"]::placeholder {
+  color: #a8a29e;
+}
+
+button {
+  padding: 0.5rem 1.125rem;
+  font-size: 0.8rem;
+  font-weight: 450;
+  letter-spacing: -0.01em;
+  background: #1c1917;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.15s;
+  white-space: nowrap;
+}
+
+button:hover:not(:disabled) {
+  background: #292524;
+}
+
+button:disabled {
+  background: #d6d3d1;
+  color: #a8a29e;
+  cursor: not-allowed;
+}
+
+.info {
+  font-size: 0.8rem;
+  color: #78716c;
+  margin: 0 0 1.25rem;
+}
+
+.err {
+  font-size: 0.8rem;
+  color: #b91c1c;
+  margin: 0 0 1.25rem;
+}
+
+.msg {
+  background: #fff;
+  border: 1px solid #f0efed;
+  border-radius: 8px;
+  padding: 1.25rem;
+  margin-top: 1.5rem;
+}
+
+.a {
+  margin: 0 0 0.75rem;
+  font-size: 0.9rem;
+  line-height: 1.65;
+  color: #44403c;
+  white-space: pre-wrap;
+}
+
+.cites {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  flex-wrap: wrap;
+  font-size: 0.75rem;
+  color: #a8a29e;
+}
+
+.chip {
+  display: inline-block;
+  background: #f5f5f4;
+  color: #57534e;
+  font-size: 0.72rem;
+  font-weight: 450;
+  padding: 0.2em 0.55em;
+  border-radius: 4px;
+}
