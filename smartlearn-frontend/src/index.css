@@ -1,0 +1,146 @@
+:root {
+  font-family: Inter, system-ui, -apple-system, sans-serif;
+  color: #172033;
+  background: #f4f7fb;
+}
+
+body {
+  margin: 0;
+}
+
+main {
+  width: min(760px, calc(100% - 32px));
+  margin: 48px auto;
+}
+
+h1 {
+  font-size: 1.75rem;
+  margin-bottom: 1.5rem;
+}
+
+h2 {
+  font-size: 1.15rem;
+  margin-bottom: 0.5rem;
+}
+
+h3 {
+  font-size: 1rem;
+  margin-bottom: 0.25rem;
+}
+
+/* ---- Card ---- */
+.card {
+  background: white;
+  border: 1px solid #dbe3ee;
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 1.5rem;
+}
+
+/* ---- Form ---- */
+label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-bottom: 0.35rem;
+}
+
+input[type="file"] {
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 0.55rem 0.75rem;
+  font-size: 0.95rem;
+  border: 1px solid #dbe3ee;
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.15s;
+  box-sizing: border-box;
+  margin-bottom: 0.5rem;
+}
+
+input[type="text"]:focus {
+  border-color: #4f7ce8;
+  box-shadow: 0 0 0 3px rgba(79, 124, 232, 0.15);
+}
+
+/* ---- Buttons ---- */
+button {
+  font-size: 0.9rem;
+  padding: 0.55rem 1.25rem;
+  border: none;
+  border-radius: 8px;
+  background: #4f7ce8;
+  color: white;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.15s;
+}
+
+button:hover:not(:disabled) {
+  background: #3b64c8;
+}
+
+button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* ---- Upload result ---- */
+.upload-result {
+  margin-top: 0.75rem;
+  padding: 0.75rem;
+  background: #edf2fb;
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+/* ---- Answer ---- */
+.answer-section {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #dbe3ee;
+}
+
+.answer-text {
+  white-space: pre-wrap;
+  line-height: 1.7;
+  font-size: 0.95rem;
+}
+
+/* ---- Page chips ---- */
+.citations {
+  margin-top: 0.75rem;
+}
+
+.page-chip {
+  display: inline-block;
+  background: #e5e7eb;
+  padding: 0.2rem 0.6rem;
+  border-radius: 6px;
+  margin-right: 0.35rem;
+  font-size: 0.85rem;
+  color: #374151;
+}
+
+/* ---- Error ---- */
+.error {
+  color: #a61b1b;
+  background: #fff0f0;
+  border: 1px solid #f5c6c6;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+}
+
+/* ---- Loading text ---- */
+.loading-text {
+  display: inline-block;
+  margin-left: 0.5rem;
+  font-size: 0.85rem;
+  color: #6b7280;
+}
