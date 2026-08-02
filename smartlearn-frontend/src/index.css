@@ -1,0 +1,82 @@
+:root {
+  font-family: Inter, system-ui, sans-serif;
+  color: #172033;
+  background: #f4f7fb;
+}
+
+body {
+  margin: 0;
+}
+
+main {
+  width: min(760px, calc(100% - 32px));
+  margin: 48px auto;
+}
+
+.card {
+  background: white;
+  border: 1px solid #dbe3ee;
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 16px;
+}
+
+label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+input[type="file"],
+textarea {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 12px;
+  padding: 8px;
+  border: 1px solid #dbe3ee;
+  border-radius: 8px;
+}
+
+textarea {
+  min-height: 84px;
+  font: inherit;
+}
+
+button {
+  font: inherit;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  background: #1a4fd8;
+  color: white;
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.receipt {
+  color: #2e7d32;
+}
+
+.error {
+  color: #a61b1b;
+}
+
+.citations {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
+.chip {
+  background: #e8f0fe;
+  color: #1a4fd8;
+  border-radius: 999px;
+  padding: 4px 12px;
+  font-size: 0.85rem;
+}
