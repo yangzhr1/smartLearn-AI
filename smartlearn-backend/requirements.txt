@@ -1,0 +1,12 @@
+fastapi
+uvicorn[standard]
+python-multipart
+pypdf
+openai
+python-dotenv
+# Day 3 - RAG pipeline
+ipykernel
+sentence-transformers
+faiss-cpu
+pandas
+modelscope
