@@ -9,7 +9,7 @@ body {
 }
 
 main {
-  width: min(760px, calc(100% - 32px));
+  width: min(1100px, calc(100% - 32px));
   margin: 48px auto;
 }
 
@@ -58,19 +58,85 @@ button:disabled {
   cursor: not-allowed;
 }
 
-.receipt {
-  color: #2e7d32;
-}
-
 .error {
   color: #a61b1b;
 }
 
-.citations {
+/* ---- Day 3 workspace: preview left, chat right, aligned heights ---- */
+
+.workspace {
+  display: flex;
+  gap: 16px;
+  align-items: stretch;
+}
+
+.panel {
+  background: white;
+  border: 1px solid #dbe3ee;
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.preview {
+  flex: 1 1 55%;
+}
+
+.chat {
+  flex: 1 1 45%;
+}
+
+.pdf-frame {
+  width: 100%;
+  height: 560px;
+  border: none;
+  border-radius: 8px;
+  background: #f4f7fb;
+}
+
+.preview-label {
+  font-size: 0.85rem;
+  color: #6b7a90;
+  margin: 0 0 8px;
+}
+
+.messages {
+  flex: 1;
+  overflow-y: auto;
+  max-height: 560px;
+  border: 1px solid #dbe3ee;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 12px;
+}
+
+.message {
+  margin-bottom: 12px;
+}
+
+.message.user p {
+  background: #e8f0fe;
+  border-radius: 12px;
+  padding: 8px 12px;
+}
+
+.message.assistant p {
+  background: #f4f7fb;
+  border-radius: 12px;
+  padding: 8px 12px;
+}
+
+.citation-buttons {
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
-  margin-top: 12px;
+  margin-top: 8px;
+}
+
+.placeholder {
+  color: #6b7a90;
 }
 
 .chip {

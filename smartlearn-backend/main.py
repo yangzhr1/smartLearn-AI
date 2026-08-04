@@ -1,17 +1,16 @@
 import os
-import re
 
 from fastapi import FastAPI, File, HTTPException, Query, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
 from pydantic import BaseModel, Field
 
-from .services.llm import answer_from_pages
-from .services.pdf import extract_pages
+from .services import rag
 
 app = FastAPI(title="SmartLearn Lite API")
 
 # Temporary in-memory document store. Cleared whenever the server restarts.
-documents: dict[str, list[dict]] = {}
+documents: dict[str, dict] = {}
 
 # Environment-driven CORS allowlist (comma-separated). No hard-coded origins.
 allowed_origins = [
@@ -60,17 +59,12 @@ async def upload(
         raise HTTPException(status_code=400, detail="The uploaded file is empty.")
 
     try:
-        pages = extract_pages(pdf_bytes)
-    except ValueError as exc:
-        # Includes the > MAX_PAGES case.
-        raise HTTPException(status_code=400, detail=str(exc))
-    except Exception:
-        raise HTTPException(
-            status_code=400, detail="Could not parse this file as a PDF."
+        document = rag.prepare_rag_chat_record(
+            chat_id=chat_id,
+            filename=filename,
+            pdf_bytes=pdf_bytes,
         )
-
-    readable = [page for page in pages if page["text"]]
-    if not readable:
+    except ValueError as exc:
         raise HTTPException(
             status_code=422,
             detail=(
@@ -78,21 +72,37 @@ async def upload(
                 "or image-only; OCR is not supported."
             ),
         )
+    except Exception:
+        raise HTTPException(
+            status_code=400, detail="Could not parse this file as a PDF."
+        )
 
-    documents[chat_id] = pages
-    return {
-        "status": "ok",
-        "filename": filename,
-        "chat_id": chat_id,
-        "pages": len(pages),
-        "characters": sum(len(page["text"]) for page in pages),
-    }
+    # Fail cleanly: never leave a half-written record behind.
+    documents[chat_id] = document
+    return rag.build_upload_response(document)
+
+
+@app.get("/documents/{chat_id}/file")
+def document_file(chat_id: str):
+    """Serve the uploaded PDF so the browser can preview it by chat_id."""
+    document = documents.get(chat_id)
+    if document is None:
+        raise HTTPException(
+            status_code=404,
+            detail=f"No document is stored for chat_id '{chat_id}'. Upload a PDF first.",
+        )
+    saved_path = document.get("saved_pdf_path") or document.get("file_path")
+    if not saved_path or not os.path.exists(saved_path):
+        raise HTTPException(
+            status_code=404, detail="The uploaded PDF file is missing."
+        )
+    return FileResponse(saved_path, media_type="application/pdf")
 
 
 @app.post("/chat")
 def chat(request: ChatRequest):
-    pages = documents.get(request.chat_id)
-    if pages is None:
+    document = documents.get(request.chat_id)
+    if document is None:
         raise HTTPException(
             status_code=404,
             detail=(
@@ -102,19 +112,14 @@ def chat(request: ChatRequest):
         )
 
     try:
-        answer = answer_from_pages(pages, request.message)
+        result = rag.answer_chat_turn(document, request.message)
     except Exception as exc:
         raise HTTPException(
             status_code=502, detail=f"AI service failed: {exc}"
         )
 
-    citations = extract_citations(answer, pages)
-    return {"answer": answer, "citations": citations}
-
-
-def extract_citations(answer: str, pages: list[dict]) -> list[int]:
-    """Return [Page X] numbers mentioned in the answer, restricted to pages
-    that actually exist in the stored document, sorted ascending."""
-    known = {page["page"] for page in pages}
-    cited = {int(number) for number in re.findall(r"\[Page\s+(\d+)\]", answer)}
-    return sorted(number for number in cited if number in known)
+    return {
+        "answer": result["answer"],
+        "citations": result["citations"],
+        "sources": result["sources"],
+    }
